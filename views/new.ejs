@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp - New Chat</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="wa-navbar">
+        <a href="/" class="wa-brand">
+            <div class="wa-logo-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.08L2 22l5.08-1.34C8.54 21.49 10.22 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+                </svg>
+            </div>
+            <div class="wa-brand-text">
+                <h1>WhatsApp</h1>
+                <span><span class="wa-status-dot"></span> New Conversation</span>
+            </div>
+        </a>
+        <div class="wa-nav-actions">
+            <a href="/chats" class="btn btn-light">All Chats</a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="app-container">
+        <div class="form-card">
+            <!-- Form Card Header -->
+            <div class="form-header">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Start a New Chat
+                </h2>
+                <a href="/chats" class="btn btn-light" style="padding: 4px 10px; font-size: 0.78rem;">← Back</a>
+            </div>
+
+            <!-- Form Body -->
+            <form method="POST" action="/chats" class="form-body">
+                <!-- Sender Input -->
+                <div class="form-group">
+                    <label for="from">Sender Name (From) <span class="required">*</span></label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </span>
+                        <input 
+                            type="text" 
+                            id="from"
+                            class="form-control" 
+                            placeholder="Enter sender name (e.g. Mohak)" 
+                            name="from" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Receiver Input -->
+                <div class="form-group">
+                    <label for="to">Receiver Name (To) <span class="required">*</span></label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <line x1="20" y1="8" x2="20" y2="14"></line>
+                                <line x1="23" y1="11" x2="17" y2="11"></line>
+                            </svg>
+                        </span>
+                        <input 
+                            type="text" 
+                            id="to"
+                            class="form-control" 
+                            placeholder="Enter recipient name (e.g. Akshat)" 
+                            name="to" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Message Textarea -->
+                <div class="form-group">
+                    <label for="message">Message <span class="required">*</span></label>
+                    <textarea 
+                        id="message"
+                        class="form-control" 
+                        name="message" 
+                        rows="4" 
+                        maxlength="50" 
+                        placeholder="Type your message here (max 50 characters)..." 
+                        required
+                        oninput="document.getElementById('char-count').innerText = this.value.length"
+                    ></textarea>
+                    <div class="form-helper">
+                        <span>Keep it short & sweet</span>
+                        <span><span id="char-count">0</span> / 50 characters</span>
+                    </div>
+                </div>
+
+                <!-- Form Action Buttons -->
+                <div class="form-actions">
+                    <a href="/chats" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                        Create Chat
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
