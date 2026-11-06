@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp - All Chats</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="wa-navbar">
+        <a href="/" class="wa-brand">
+            <div class="wa-logo-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.08L2 22l5.08-1.34C8.54 21.49 10.22 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+                </svg>
+            </div>
+            <div class="wa-brand-text">
+                <h1>WhatsApp</h1>
+                <span><span class="wa-status-dot"></span> Active Chats</span>
+            </div>
+        </a>
+        <div class="wa-nav-actions">
+            <a href="/" class="btn btn-light">Home</a>
+            <a href="/chats/new" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                New Chat
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="app-container">
+        <!-- Page Title & Header Info -->
+        <div class="chat-page-header">
+            <h2>
+                <span>All Conversations</span>
+                <span class="chat-count-badge"><%= chaty.length %> messages</span>
+            </h2>
+            <a href="/chats/new" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Create Chat
+            </a>
+        </div>
+
+        <!-- Chat List -->
+        <% if (chaty.length === 0) { %>
+            <div class="empty-chat-state">
+                <div class="empty-chat-icon">
+                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <h3>No Chats Yet</h3>
+                <p>Start a conversation to see your messages appear here.</p>
+                <a href="/chats/new" class="btn btn-primary">Start a New Chat</a>
+            </div>
+        <% } else { %>
+            <div class="chat-list">
+                <% for (let t of chaty) { %>
+                    <article class="chat-card">
+                        <!-- Sender, Arrow, Receiver & Timestamp -->
+                        <div class="chat-card-top">
+                            <div class="participants">
+                                <!-- Sender Avatar & Info -->
+                                <div class="user-badge">
+                                    <div class="avatar-circle">
+                                        <%= t.from ? t.from.trim().charAt(0).toUpperCase() : 'U' %>
+                                    </div>
+                                    <div class="user-name-wrapper">
+                                        <span class="user-role-label">From</span>
+                                        <span class="user-name"><%= t.from %></span>
+                                    </div>
+                                </div>
+
+                                <!-- Arrow Indicator -->
+                                <div class="direction-arrow" title="sent to">➔</div>
+
+                                <!-- Receiver Avatar & Info -->
+                                <div class="user-badge">
+                                    <div class="avatar-circle receiver">
+                                        <%= t.to ? t.to.trim().charAt(0).toUpperCase() : 'U' %>
+                                    </div>
+                                    <div class="user-name-wrapper">
+                                        <span class="user-role-label">To</span>
+                                        <span class="user-name"><%= t.to %></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Formatted Date & Time Badge -->
+                            <div class="chat-timestamp" title="Message Timestamp">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                <span>
+                                    <%= t.created_at ? new Date(t.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' }) + ', ' + new Date(t.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Recently' %>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Chat Message Bubble -->
+                        <div class="chat-bubble">
+                            <p class="chat-bubble-text"><%= t.message %></p>
+                        </div>
+
+                        <!-- Action Buttons: Edit and Delete -->
+                        <div class="chat-actions">
+                            <!-- Edit Form -->
+                            <form action="/chats/<%= t._id %>/edit" method="GET">
+                                <button type="submit" class="btn btn-edit" title="Edit this message">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Edit
+                                </button>
+                            </form>
+
+                            <!-- Delete Form (with corrected confirmation message) -->
+                            <form action="/chats/<%= t._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this chat?')">
+                                <button type="submit" class="btn btn-delete" title="Delete this message">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </article>
+                <% } %>
+            </div>
+        <% } %>
+    </main>
+</body>
+</html>
